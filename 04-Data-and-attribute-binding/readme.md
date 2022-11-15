@@ -1,4 +1,4 @@
-## **04-Data-and-attribute-binding**
+## **04 Data and attribute binding**
 
     1. Data Binding(string interpolation)
 
