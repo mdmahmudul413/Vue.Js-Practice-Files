@@ -27,4 +27,26 @@
     ➢ we can pass argument on an event
     ➢ How to get PointerEvent object(click event object) 
 
+## **07 Event Modifiers**
+
+    ➢ We have some default event for input tag(onkeyup, onkeydown, oninput)
+    ➢ Native keyboard event
+    ➢ Showing something in the vue way
+    ➢ Event Modifiers
+    ➢ Event Modifiers: @keyup.enter="handleKeyup"
+    ➢ More Event Modifiers
+    ➢ Get Native Submit Event Object
+    ➢ Event Modifiers: @submit.prevent="handleFormSubmit"
+    ➢ We can use click event on <div>
+    ➢ Event Modifiers: @submit.prevent="handleFormSubmit"
+    ➢ Event Modifiers: @click.right="handleCardEvent" will work when we click on mouse right
+    ➢ Differentiate two individual events() - e.stopPropagation()
+    ➢ Event Modifiers: @click.stop="handleViewClick
+    ➢ 
+    ➢ 
+
+
+
+
+
 

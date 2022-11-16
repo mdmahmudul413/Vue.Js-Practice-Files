@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vue.global.js"></script>
+</head>
+<body>
+    <header>
+        <h2>Vue JS 3 Practice</h2>
+    </header>
+    <div id="app">
+        <h3>Enter Your Name</h3>
+
+        <!-- <input @keyup="handleKeyup" type="text"> -->
+
+        <input @keyup.enter="handleKeyup" type="text">
+        <p>{{name}}</p>
+
+        <!-- submitting form without reloading page using JS preventDefault() -->
+        <!-- <form @submit="handleFormSubmit">
+            <h3>Fill the form</h3>
+            <input type="text">
+            <button>Submit</button>
+        </form> -->
+        <br><hr><br>
+        <!-- submitting form without reloading page using Vue event modifier  -->
+        <form @submit.prevent="handleFormSubmit">
+            <h3>Fill the form</h3>
+            <input type="text">
+            <button>Submit</button>
+        </form>
+        <br><hr><br>
+        <!-- click mouse -->
+        <!-- <div class="card" @click="handleCardEvent"> -->
+        <!-- </div> -->
+
+        <!-- click mouse right -->
+        <!-- <div class="card" @click.right="handleCardEvent"> -->
+        <!-- </div> -->
+
+
+        <!-- click mouse left -->
+        <div class="card" @click.left="handleCardEvent">
+
+        </div>
+
+        <br><hr><br>
+
+        <!-- A button inside div. Example: differentiate two individual events using JS e.stopPropagation()-->
+        <!-- <div class="card" @click="handleCardEvent">
+            <button @click="handleViewClick">
+                View
+            </button>
+        </div> -->
+
+
+        <!-- A button inside div. Example: differentiate two individual events using vue js event modifiers -->
+        <div class="card" @click="handleCardEvent">
+            <button @click.stop="handleViewClick">
+                View
+            </button>
+        </div>
+
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
