@@ -42,6 +42,24 @@
     ➢ Event Modifiers: @click.right="handleCardEvent" will work when we click on mouse right
     ➢ Differentiate two individual events() - e.stopPropagation()
     ➢ Event Modifiers: @click.stop="handleViewClick
+
+## **08 Two way data binding**
+
+    ➢ Input Event: <input type="text" @input="handleInput">
+    ➢ For manually two way bindings use ":value='variable'" in the input field
+    ➢ Two way bindings in vue.js use "v-model='variable'" in the input field
+    ➢ To take every input as number use "v-model.number='variable'" in input field
+    ➢ Modify "v-model": <input v-model.number="num" type="text">
+   
+## **09 Class binding**
+
+    ➢ To bind html element class in normal way, use ":class='property'"
+    ➢ vue conditional class binding / Object style class binding
+    ➢ To bind html element class in vue way, :class="{className: true/false}"
+    ➢ We can use both vue conditional ":class" and html normal "class" togather
+    ➢ We can also use array in the colon class (:class=['...', '...'])
+
+
     
 
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vue.global.js"></script>
+</head>
+<body>
+    <header>
+        <h2>Vue JS 3 Practice</h2>
+    </header>
+
+    <div id="app">
+        <!-- Binding button class in vue way -->
+        <!-- we have to give a object insude ":class" attribute -->
+        <!-- We can use both vue conditional ":class" and html normal "class" togather -->
+        <button class="outline" :class="{active: activeClass == 'red'}" @click="setClass('red')">RED</button>
+        <button :class="{active: activeClass == 'green', bold: true}" @click="setClass('green')">GREEN</button>
+        <button :class="{active: activeClass == 'blue'}" @click="setClass('blue')">BLUE</button>
+
+        <!-- we can also use array in the colon class -->
+        <button :class="['active', 'bold']" @click="setClass('blue')">Simple Button</button>
+
+        <br>
+
+        <!-- Binding class in normal way -->
+        <div :class="activeClass">
+
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

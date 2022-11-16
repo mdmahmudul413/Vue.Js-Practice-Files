@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vue.global.js"></script>
+</head>
+<body>
+    <header>
+        <h2>Vue JS 3 Practice</h2>
+    </header>
+
+    <div id="app">
+        <h3>Enter a Number</h3>
+        <!-- maually two way binding using :value attribute -->
+        <!-- <input :value="num" type="text" @input="handleInput"> -->
+
+
+        <!-- two way binding using vue js attribute property v-model -->
+        <!-- <input v-model="num" type="text"> -->
+
+
+        <!-- modifying v-model -->
+        <input v-model.number="num" type="text">
+
+
+        <br><br>
+        <button @click="getDouble">Get Double</button>
+        <button @click="getSquare">Get Square</button>
+        <button @click="addTen">Add 10</button>
+        <button @click="reset">Reset</button>
+        <br><br><hr><br>
+        <label>Entered Number: {{num}}</label>
+        <br><br>
+        <label>Result: {{result}}</label>
+        
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
