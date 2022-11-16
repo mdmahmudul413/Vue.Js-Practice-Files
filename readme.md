@@ -42,8 +42,7 @@
     ➢ Event Modifiers: @click.right="handleCardEvent" will work when we click on mouse right
     ➢ Differentiate two individual events() - e.stopPropagation()
     ➢ Event Modifiers: @click.stop="handleViewClick
-    ➢ 
-    ➢ 
+    
 
 
 
