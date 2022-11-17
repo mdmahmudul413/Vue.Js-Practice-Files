@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vue.global.js"></script>
+</head>
+<body>
+    <header>
+        <h2>Vue JS 3 Practice</h2>
+    </header>
+
+    <div id="app">
+        <!-- Adding Inline CSS normal way -->
+        <!-- <div class="card" style="background-color: red; color: white;">
+            Card
+        </div> -->
+
+
+        <!-- Adding Inline CSS using attribute binding -->
+        <!-- <div class="card" :style="'background-color: red; color: white;'">
+            Card
+        </div> -->
+
+
+        <!-- Adding Inline CSS using attribute binding with js decleard variable -->
+        <!-- <div class="card" :style="'background-color:'+ bgColor + 'color:' + textColor + 'border:' + border ">
+            Card
+        </div> -->
+
+
+        <!-- Adding Inline CSS dynamically from a input field using attribute binding with js decleard variable -->
+
+        <!-- <h3>Input background-color, text color and border serially</h3>
+        <input type="text" v-model="bgColor">
+        <input type="text" v-model="textColor">
+        <input type="text" v-model="border">
+        <div class="card" :style="'background-color:'+ bgColor + ';color:' + textColor + ';border:' + border ">
+            Card
+        </div> -->
+
+
+
+        <!-- Adding Inline CSS from vue object style -->
+        
+        <!-- <div class="card" :style="{'background-color': bgColor, 'color' : textColor, 'border': border}">
+            Card
+        </div> -->
+
+
+        <!-- Avoid hyphen(-) symbolic css property and recommanded to write Camel Case -->
+        <!-- <input type="text" v-model="bgColor">
+        <div class="card" :style="{backgroundColor: bgColor, 'color' : textColor, 'border': border}">
+            Card
+        </div> -->
+
+        <!-- Example of html input element with color valued type attribute -->
+            <input type="text" v-model="bgColor">
+            <input type="color" v-model="bgColor">
+            <div class="card" :style="{backgroundColor: bgColor, 'color' : textColor, 'border': border}">
+                Card
+            </div>
+            
+        
+
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

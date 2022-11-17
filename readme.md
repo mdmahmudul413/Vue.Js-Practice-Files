@@ -58,6 +58,17 @@
     ➢ To bind html element class in vue way, :class="{className: true/false}"
     ➢ We can use both vue conditional ":class" and html normal "class" togather
     ➢ We can also use array in the colon class (:class=['...', '...'])
+   
+## **10 Style Binding**
+
+    ➢ Style binding in regular inline CSS way
+    ➢ Style binding in attribute binding way
+    ➢ We have to write JS syntax inside colon attribute ":style='...'"
+    ➢ Style binding in vue object style
+    ➢ The hyphen(-) symbolic css property is recommanded to write Camel Case
+    ➢ Example of html input element with color valued type attribute
+        <input type="color" v-model="bgColor">
+
 
 
     
