@@ -9,10 +9,13 @@ var app = Vue.createApp({
     // Write methods like bellow
     methods: {
 
-    //     when we use v-model, then we don't need handleInput
-    //     handleInput(e){
-    //         this.num = e.target.value; 
-    //    },
+     //    when we use v-model, then we don't need handleInput
+     //    handleInput(e){
+     //        this.num = e.target.value; 
+
+     //      //   To get input event
+     //      console.log(e);
+     //   },
 
        getDouble(){
             this.result = 2 * this.num;

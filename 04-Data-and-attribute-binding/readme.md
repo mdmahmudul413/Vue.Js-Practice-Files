@@ -26,7 +26,7 @@
 
         a. use "v-bind"
          <a v-bind:href="tutorialInfo.githubLink">GitHub</a>
-        a. use ":" (shortcut)
+        b. use ":" (shortcut)
          <a v-bind:href="tutorialInfo.githubLink">GitHub</a>
 
 

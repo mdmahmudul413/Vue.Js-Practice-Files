@@ -17,12 +17,12 @@
         <!-- Binding button class in vue way -->
         <!-- we have to give a object insude ":class" attribute -->
         <!-- We can use both vue conditional ":class" and html normal "class" togather -->
-        <button class="outline" :class="{active: activeClass == 'red'}" @click="setClass('red')">RED</button>
+        <button :class="{active: activeClass == 'red'}" @click="setClass('red')">RED</button>
         <button :class="{active: activeClass == 'green', bold: true}" @click="setClass('green')">GREEN</button>
         <button :class="{active: activeClass == 'blue'}" @click="setClass('blue')">BLUE</button>
 
         <!-- we can also use array in the colon class -->
-        <button :class="['active', 'bold']" @click="setClass('blue')">Simple Button</button>
+        <button :class="['active', 'bold']">Simple Button</button>
 
         <br>
 

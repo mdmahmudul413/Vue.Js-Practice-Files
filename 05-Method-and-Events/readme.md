@@ -5,8 +5,6 @@
     2. Process to show methods value in the Dom,
 
         var app = Vue.createApp({
-            
-            // Write methods like bellow
             methods: {
                 getCurrentTime(){
                     let ct = new Date();

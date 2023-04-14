@@ -17,6 +17,11 @@ var app = Vue.createApp({
 
         test(e){
             console.log(e);
+        },
+
+        practice(e, value){
+            console.log(e);
+            this.count = this.count + value;
         }
     },
     

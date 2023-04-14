@@ -21,7 +21,14 @@
        <button @click="increment(2)">Increase 2</button>
        <button @click="decrement(2)">Decrease 2</button>
        <br>
+       <!-- without passing argument -->
+       <button @click="test">Get pointer event object</button>
+
+       <!-- passing argument -->
        <button @click="test($event)">Get pointer event object</button>
+
+       <!-- passing multiple arguments -->
+       <button @click="practice($event, 3)">Get pointer event object & Increase counter with 3</button>
 
 
     </div>

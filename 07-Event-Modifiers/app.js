@@ -11,17 +11,22 @@ var app = Vue.createApp({
             // to get input field value in the console
             // console.log(e.target.value);
 
+            // to get keyboard event
+            console.log(e);
+
             // to show something in the vue way
             this.name = e.target.value;
        },
 
-       handleFormSubmit(){
-        console.log("Form Submitted!");
+       handleFormSubmit(e){
+        console.log(e);
+        // e.preventDefault();
        },
 
        handleCardEvent(e){
         // to get click event object
         // console.log(e);
+
         console.log('Card Click');
        },
 
