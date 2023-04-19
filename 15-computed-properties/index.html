@@ -14,11 +14,31 @@
     </header>
 
     <div id="app">
+        <input type="text" placeholder="Enter Your Review" v-model="review">
       <h3>Skills</h3>
-
       <!-- add and fetch data from array object -->
       <ul>
         <li @click="removeSkill(i)" v-for="(skill, i) in skills" :key="skill.name">
+          <p>
+            {{ i+1 }}. {{ skill.name }} ({{ skill.experience }})
+        </li>
+      </ul>
+      <br>
+
+      <!-- calling countTotal method -->
+      <!-- <h4>Total Skills: {{ countTotal() }}</h4> -->
+
+      <!-- calling countTotal computed property -->
+      <h4>Total Skills: {{ countTotal }}</h4>
+
+      <!-- We can do this job simply use bellow this -->
+      <!-- <h4>Total Skills: {{ skills.length }}</h4> -->
+      <br>
+
+      <h3>Experienced Skill</h3>
+
+      <ul>
+        <li @click="removeSkill(i)" v-for="(skill, i) in experiencedSkills" :key="skill.name">
           <p>
             {{ i+1 }}. {{ skill.name }} ({{ skill.experience }})
         </li>

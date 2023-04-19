@@ -655,7 +655,26 @@
 
 ## **15 Computed Properties**
     
-    1. 
+    1. There is a problem. When any of data property's value change, the methods instantly execute. When there are so many methods 
+       inside our project, The vast execution of multiple methods can slower our project performense.
+
+    2. To eleminate this type of problem, vue.js gives us computed property.
+
+    3. We have to remember some things while using computed properties
+    
+        a. We get computed properties as property like data property not methods,
+
+            <h4>Total Skills: {{ countTotal }}</h4>
+
+          Note: That's why we have to use it inside out Dom as a property
+
+        b. We can't pass arguments inside computed properties
+
+    4. JS Array filter,
+
+        let ex = this.skills.filter((item) =>{
+            return item.experience >= 10;
+        });
 
 
 
