@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.global.js"></script>
+  </head>
+  <body>
+    <header>
+      <h2>Vue JS 3 Practice</h2>
+    </header>
+    
+    <div id="app">
+      <h3>Skills</h3>
+
+      <!-- Without using vue index -->
+      <!-- <input type="text" v-model="newSkill">
+      <button @click="addSkill">Add New Skill</button>
+      <ul>
+        <li v-for="skill in skills">{{ skill }}</li>
+      </ul> -->
+
+      <!-- using vue index -->
+      <!-- <input type="text" v-model="newSkill">
+      <button @click="addSkill">Add New Skill</button>
+      <ul>
+        <li v-for="(skill, i) in skills">{{ i+1 }}. {{ skill }} <a href="#" @click="removeSkill(i)">Remove</a></li>
+      </ul> -->
+
+      <!-- add and fetch data from array object -->
+      <ul>
+        <input type="text" v-model="newSkillObj.name">
+        <button @click="addSkillObj">Add New Skill</button>
+        <li v-for="(skill, i) in skills">{{ i+1 }}. {{ skill.name }} ({{ skill.experience }}) <a href="#" @click="removeSkill(i)">Remove</a></li>
+      </ul>
+      
+    </div>
+    
+    <script src="app.js"></script>
+  </body>
+</html>
