@@ -677,4 +677,103 @@
         });
 
 
+## **16 Watcher**
+
+    1. we can watch a property value changing by watch object
+
+        dom,
+
+            <input type="text" v-model="mobile"/>
+
+        app.js,
+
+            var app = Vue.createApp({
+                data(){
+                    return{
+                        mobile: "",
+                    }
+                },
+
+                watch:{
+                    mobile(newValue){
+                        console.log(newValue);
+                    }
+                }
+            });
+
+    2. JS function isNaN() is check a value is number or not
+
+    3. We can do validation by wathcer
+
+    4. The 2nd parameter can be adopted to assign the old value to the mobile data property
+
+        watch:{
+            mobile(newValue, oldValue){
+
+                console.log(newValue);
+
+                if(isNaN(newValue)){
+                    alert('This is not a number');
+                    this.mobile = oldValue;
+                }
+            }
+        }
+
+    5. If we want to watch nested data property
+
+        var app = Vue.createApp({
+            data(){
+                return{
+                    name: {
+                        firstName: "",
+                        lastName: ""
+                    }
+                }
+            },
+
+            watch:{
+                'name.firstName': function(newValue, oldValue){
+                    console.log(newValue, oldValue);
+                }
+            }
+        });
+
+    6. We can watch a whole object by doing this bellow,
+
+        var app = Vue.createApp({
+            data(){
+                return{
+                    name: {
+                        firstName: "",
+                        lastName: ""
+                    }
+                }
+            },
+
+            watch:{
+                name: {
+                    deep: true,
+                    handler: function(newValue){
+                        console.log(newValue);
+                    }
+                }
+            }
+        });
+
+    7. We can watch array or coumputed property at the same way
+
+## **17 methods vs computed properties vs watcher**
+
+    1. Computed property is better then method, because we will get the first execution while using computed property.
+
+    2. Actually 3 of these are usefull in different cases
+
+        a. computed properties: When we have to calculate various data properties to show property on view, then we use computed property.
+
+        b. methods: we will use methods for event binding or passing arguments.
+
+        c. watcher: watcher will be used for detecting the change of value of data property. Generally watcher is used for validation. But it has multiple uses.
+
+
+
 

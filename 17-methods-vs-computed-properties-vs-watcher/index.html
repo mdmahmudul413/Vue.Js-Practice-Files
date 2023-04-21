@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.global.js"></script>
+  </head>
+  <body>
+    <header>
+      <h2>Vue JS 3 Practice</h2>
+    </header>
+
+    <!-- simply watch a property by watcher -->
+    <!-- <div id="app">
+        <input type="text" v-model="mobile"/>
+    </div> -->
+
+    <!-- validation by watcher -->
+    <div id="app">
+        <!-- call from computed property -->
+        <!-- <p>Your Full Name is: {{ fullName }}</p> -->
+
+        <!-- call from method -->
+        <!-- <p>Your Full Name is: {{ fullName() }}</p> -->
+
+        <!-- call from method -->
+        <p>Your Full Name is: {{ fullName }}</p>
+        <br>
+        <input type="text" v-model="firstName" placeholder="Enter your first name"/><br>
+        <input type="text" v-model="lastName" placeholder="Enter your last name"/><br>
+    </div>
+
+    
+    <script src="app.js"></script>
+  </body>
+</html>
