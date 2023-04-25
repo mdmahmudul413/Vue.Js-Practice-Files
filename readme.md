@@ -774,6 +774,98 @@
 
         c. watcher: watcher will be used for detecting the change of value of data property. Generally watcher is used for validation. But it has multiple uses.
 
+## **19 Ticket Booking App**
+
+    1. We can use functions like array length in computed properties
+
+        <div class="ticket-app__instruction" v-if="selectedSeats.length === 0">
+            No seat selected <br>
+            Selects some seats first
+        </div>
+
+## **20 Multiple App and templates**
+
+    1. If we want to create multiple apps for the various segments for out webpage, we can do this. The created apps will independent.
+
+    2. We can not use a perticular app data property to another app.
+
+    3. For this reason, if we need to share data with the segments, we will not make multiple app.
+
+    4. We can use template property to renden html elements in the dom.
+
+## **21 Vue Js Reactivity How it works**
+
+    1. Two way data binding how it works actually,
+
+        var app = Vue.createApp({
+            data(){
+                return{
+                    name: "",
+                }
+            },
+
+            methods: {
+                crear(){
+                    this.name = '';
+                }
+            },
+        });
+
+        app.mount('#app');
+
+    The reactivity working process,
+
+        The data, methods, etc properties return object which are merged to a global object by vue js. We can access this global object by 'this' keyword. 
+
+    2. vue js do this reactivity by vanilla js 'proxy' process 
+
+    3. The proxy process is like bellow,
+
+        var data = {
+            name: "",
+        }
+
+        var handler = {
+            set(target, key, value){
+                console.log(target);
+                console.log(key);
+                console.log(value);
+
+                if(key == 'name'){
+                    var output = document.querySelector('#output');
+                    output.innerHTML = value;
+                }
+            }
+        }
+
+        var proxyData = new Proxy(data, handler);
+
+        proxyData.name = "Mamun";
+
+## **22 Understanding Virtual Dom**
+
+    1. Vue js use JS core feature proxy to maintain the Dom Reactivity. But vue js does not only use the proxy feature to maintain reactivity.
+
+    2. If we use the JS proxy to add a new li inside a ul item, it will update the total ul at a time but we can see that vue js does 
+       not update the whole dom at a time. The fact is, Vue JS does not use only the proxy for the reactivity.  
+
+    3. Basically Vue JS use DIFF Algorithm to update the new node only
+
+        Explanation: Vue JS firsly check the current Dom value. After the upgration of the Dom, Vue JS compare the upgration with the previous 
+        value. Then Vue JS just change the difference which does not need to update the whole Dom. For doing this job if vue js first read the Dom 
+        using JS then, after upgration compare the change and again change only the differene, it's a time consuming issue for a large project. 
+        That's why Vue JS mainly use Virtual Dom with render function. It means there are some render functions which handles the process of rendering.
+        Basically Vertual Dom means Vue JS makes a js object of the current dom value. Then after upgration of the Dom, Vue JS compare it with the 
+        Virtual Dom. This process is faster then reading the Dom and change it. That's why we get good performence.
+
+    4. Virtual Dom has multiple benifits 
+
+        We are currently use virtual dom for detecting the change of html dom. But we can use this technology in the android and ios app development.
+        Vue JS provide a platform name "Native Script Vue" for developing mobile app.
+
+
+
+
 
 
 
