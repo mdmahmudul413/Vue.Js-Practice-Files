@@ -863,9 +863,139 @@
         We are currently use virtual dom for detecting the change of html dom. But we can use this technology in the android and ios app development.
         Vue JS provide a platform name "Native Script Vue" for developing mobile app.
 
+## **23 Introduction to Components**
+
+    1. The frontend frameworks Angular, React, Vue JS become popular because of Component.
+
+    2. Except component, we can not develop mobile or web app.
+
+    3. Basically sometimes html elements can not serve our whole purpose all the time. Some time we need custom UI.
+
+    4. Suppose we need a rating component. But HTML does not provide us rating tag. In this case, using Vue JS we can make a component
+       of rating and use it multiple time whenever we need it inside our UI. So that, simply component is a combination of 
+       HTML default tag which can be reused multiple times.
+
+    5. We can use attribute inside components like default HTML tag. We can also define custom attribute also. This is called props.
+
+## **24 Creating My First Component**
+
+    1. If we want to create a component, at first we have to register it.
+
+    2. Registering a component
+
+        app.component('contact-details', {
+            data(){
+                return{
+                    name: 'Mamunur Rashid',
+                }
+            },
+
+            template: `
+                <h1>Contact Details</h1>
+                <p><strong>Name:</strong>Mamunur Rashid</p>
+                <p><strong>Website:</strong>www.rimonbd.com</p>
+                <p><strong>Address:</strong>Dhaka, Bangladesh</p>`,
+        });
+
+            Note: 
+            
+                a. Best practice is to register a componet using dash(-) in the component name to avoid the default html tag name.
+
+                b. Basically components behavior and the vue js app behavior are closly same. The second parameter object is as like as the create app object. 
+                We can simply declear data property inside the object.
+    
+    3. Now use <contact-details/> or <contact-details></contact-details> inside template to use the component.
+
+## **25 Changing Development Environment(Vue CLI)**
+
+    1. We will continue the rest parts using Vue CLI instead of using CDN.
+
+    2. We should not develop a large project usnig CDN because there are so many limitations.
+
+    3. CLI - Command Line Interface
+
+    4. We don't get proper debugging benefit in vue CDN 
+
+    5. In vue CDN, project file runs using file url or file protocol. We don't get the maximum benefit of JS while using file protocol. 
+
+    6. We can't do routing easily in CDN.
+
+    7. We will get modern JS all features in Vue CLI
+
+    8. We don't get proper suggestions while using Vue CDN
+
+    9. The CND project output is not minified but CLI project output is minified. Thats why CND injected project has performense issue
+       for loading slower in the browser.
+
+    10. In CDN installation, vue js use a function name eval(). It has a huge performense issue. That's why JS authority suggest us to not use eval() function
+
+    11. Vue CLI projects can easilly run any modern or old version browser. 
+
+## **26 Introduction to Vue CLI**
+
+    1. Node.js is a back-end JavaScript runtime environment.
+
+    2. Previously we can not run js code without the help of browser. But now we can run js code without browser for the help of node js.
+
+    3. We need node js for creating vue CLI project.
+
+    4. Installing vue cli
+
+        command: npm install -g @vue/cli
+
+    5. To check version 
+
+        command: vue --version
+
+    6. Now we will create project using vue CLI
+
+        We can install vue js via command line or Graphical User Interface (GUI)
+
+    7. Creating project via command line
+
+        command: vue create project-name
+
+    8. Creating project via GUI
+
+        command: vue ui
+
+## **27 Understanding CLI Project Structure**
+
+    1. CLI project is mainly a node js project
+
+    2. A standard project has a package.json file. Inside package.json, there are som configura of node js project.
+
+        a. dependencies
+
+            Inside dependencies we will find the js library dependencies information. Initially there will be core-js and vue dependencies.
+
+        b. devDependencies
+
+            We need devDependencies at the time of development. We don't need devDependencies in our final build.
+
+        c. script
+
+            There are some script name like serve, build, lint. We can make command of "npm run serve"/"npm run build"/"npm run lint"
+            to run those script. 'serve' script has some service of detecting any change of our code or file and instantly
+            refresh it into our browser. Thats why at the time of development, we will use this "serve" script. After
+            Development we will make command of "build". 
+
+    3. Node Modules Folder
+
+        Dependencies and devDependencies will be installed inside this folder.
+
+        Note: When we share our project with anyone, we always share it without node modules folder. Because we can easilly make this folder using "npm install" command.
+
+    4. public/index.html file will serve first.
+
+    5. src folder: We mainly write our codes inside this folder.
+
+    6. src/main.js this file mainly injects inside index.html.
 
 
 
+
+     
 
 
 
