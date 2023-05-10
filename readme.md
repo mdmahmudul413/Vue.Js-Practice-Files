@@ -992,10 +992,365 @@
 
     6. src/main.js this file mainly injects inside index.html.
 
+## **28 Recreating Vue App with CLI**
 
+    1. To better understand of vue cli, we first delete assets, components folders and App.vue file. 
 
+    2. Now inside src folder, there is only main.js file.
 
-     
+    3. main.js file is the main entry point. This file will autometically inject inside index.html bellow app element.
+
+    4. Previously we create app through vue CDN createing a global object of 'Vue' but Now in CLI we will create app 
+       using modern JS 'import' keyword. And the Vue package is already installed in node modules as a dependency. So we just import it and create an app.  
+
+    5. Using ES6, we don't have to import full Vue. We can only import the perticular method which we need like bellow.
+
+        import { createApp } from "vue";
+
+        Note: Here we just import createApp method. But in vue CDN, we created full vue object to use createApp method.
+
+    6. Template option is not support in vue CLI because runtime compilation is not supported. On the other hand template option is 
+        using eval() function which is not appropiate.
+
+    7. Without using template option, we can use render function for rendering something in the view.
+
+    8. But firsly render function simply render plain text. 
+
+    9. If we want to render html tag, we have create html tag through JS. 
+
+    10. For serving this perpous, Vue JS gives us a method "h" in vue global object. Using this h method, we can create html tag. Firstly we have to import it,
+
+        import { createApp, h } from 'vue'
+
+    11. To create html tag,
+
+        a. If we want "<h1>Welcome to vue js</h1>" type of output,
+        
+            render() {
+                return h("h1", {}, this.msg);
+            },
+
+            Note: h(tag name, attribute, content)
+
+        b. If we want bellow type of output,
+
+            "<div>
+                <h1>Welcome to vue js</h1>
+            </div>" 
+        
+            Then,
+
+                render() {
+                    return h("div", {}, [
+                        h("h1", {}, this.msg)  
+                    ]);
+                },
+    
+        Note: This is not the optimal way of coding, we will write the html code inside vue file.
+
+    12. Inside vue file, there are three sections,
+
+        a. template
+        b. script
+        c. style
+
+    13. Now we can write html part inside template section. We don't need to write complex render function. And also can write js code inside script section.
+
+    14. Importing file instruction,
+
+        a. When we import some package, we just write the name of the package,
+
+            import { createApp, h } from 'vue'
+
+        b. When we want to import own custom make file, we have to give relative path,
+
+            import App from './App.vue'
+
+    15. In this way, vue js mainly create internally render function of the template section, and render the output. We can check it like bellow,
+
+        main.js,
+
+            console.log(App);
+
+    16. We can add different options like methods or anything else in the script section.
+
+## **29 Recreating The Component with Vue CLI**
+
+    1. We will create the part 24 component with vue CLI in this part
+
+    2. If we create component name "contact-details" like 24, then use it as a tag inside App.vue. It will give the same error like bellow,
+
+        Component provided template option but runtime compilation is not supported in this build of Vue.
+
+    3. Actually we will write component in different file in Vue Cli.
+
+    4. The process of creating and using component in vue cli bellow,
+
+        a. Create ContactDetails.vue file and inside ContactDetails.vue,
+
+            <template>
+                <div class="Contact-Details">
+                    <h1>Contact Details</h1>
+                    <p><strong>Name:</strong>Mamunur Rashid</p>
+                    <p><strong>Website:</strong>www.rimonbd.com</p>
+                    <p><strong>Address:</strong>Dhaka, Bangladesh</p>
+                </div>
+            </template>
+
+        b. Inside main.js,
+
+            import ContactDetails from './ContactDetails.vue'
+
+            var app = createApp(App);
+
+            app.component('contact-details', ContactDetails);
+
+            app.mount('#app');
+
+        c. Inside App.vue,
+
+            <template>
+                <div class="app-view">
+                    <contact-details></contact-details>
+                </div>
+            </template>
+
+        Note: This is a global component. Because we make it using app.component(). We can use this global component anywhere inside our project.
+
+    5. We can also make local component if we need. When we want a component in a perticular file then we need local component.
+
+    6. Registering local component inside App.vue
+
+        <template>
+            <div class="app-view">
+                <contact-details></contact-details>
+                <ContactDetails/>
+            </div>
+        </template>
+
+        <script>
+        import ContactDetails from './ContactDetails.vue'
+        export default {
+            data(){
+                return{
+
+                }
+            },
+            components:{
+                ContactDetails
+            }
+        }
+        </script>
+
+## **30 Vue CLI Alternatives**
+
+    1. The alternate of vue CLI is mainly Vite Package.
+
+    2. We can create and develop our project using vite package. This is comparativly faster then other build tools.
+
+## **31 Adding Style to Components**
+
+    1. We can give css styling inside style tag in the components.
+
+    2. We can give inline css also in the template.
+
+    3. To eliminate style confliction, we can use scoped attribute inside style tag in the component.
+
+        <style scoped>
+            .container{
+                margin: 28px;
+                padding: 28px;
+                border: 2px solid;
+                color: red;
+            }
+        </style>
+
+## **32 Components Custom Properties**
+
+    1. We can add various attributes inside a html tag like <img> tag has "src" attribute.
+
+    2. By the help of Vue JS, we can create components and use it as a tag like <contact-details>
+
+    3. We can also add attributes inside these tag which are called props.
+
+    4. We can not set as the same key as the data properties in the props. This will through error.
+
+    5. Declear props like bellow,
+
+        export default {
+            props: ['name', 'website', 'address'],
+            data(){
+                return{
+
+                }
+            },
+        }
+
+    6. Set the props value like bellow,
+
+        <contact-details name="Mahmudul Islam" website="www.youtube.com" address="Taltola, Bangladesh"></contact-details>
+
+    7. Now we can use props inside template like {{ name }}, {{ website }}
+
+    8. If we set props key like camel case multiple word "wesiteAddress" then, we set the attribute like bellow,
+
+        <contact-details website-address="www.youtube.com"></contact-details>
+
+## **33 Props Validation**
+
+    1. We can validate our props like bellow
+
+        props: {
+            name: String, 
+            websiteAddress: String, 
+            address: String
+        },
+
+    Note: We can declear any props String, Number, array, object, any, etc.
+
+    2. We can validate with more specification,
+
+        props: {
+            name: String, 
+            websiteAddress: {type: String, required: true}, 
+            address: {type: String, required: false, default: 'http://yourwebsite.com'}
+        },
+
+    3. We can use validator for validation
+
+    4. We can also use functions in the validation.
+
+    5. We can also pass array/object using v-for loop iteration or anything else
+
+## **34 Component Slots**
+
+    1. When we need same component with different html output, we have to use component slots.
+
+    2. How to use slot,
+    
+        Suppose there is a component name CardView.vue
+
+        Inside CardView.vue,
+
+            <template>
+                <div class="the-card">
+                    <div class="the-card__title">
+                        {{ cardTitle }}
+                    </div>
+                    <div class="the-card__body">
+                        <slot></slot>
+                    </div>
+                </div>
+            </template>
+
+            <script>
+            export default {
+                props: ["cardTitle"]
+            };
+            </script>
+
+        Inside App.vue
+
+            <template>
+                <div class="container">
+                    <header>
+                        <h2>{{ msg }}</h2>
+                    </header>
+
+                    <card-view cardTitle="About me">
+                        Hi, I am Md. Mahmudul Islam
+                    </card-view>
+                </div>
+            </template>
+
+            <script>
+
+                import CardView from './CardView.vue'
+
+                export default {
+
+                    data(){
+                        return{
+                            msg: 'Welcome to vue js',
+                        }
+                    },
+
+                    components:{
+                        CardView
+                    }
+
+                }
+            </script>
+    
+    3. We should not give 'scoped' attribute in the style tag inside slot component
+
+    4. We can set some default slot content like bellow,
+
+        <slot>
+            Default Card Contents goes here.
+        </slot>
+
+## **35 Named Slots**
+
+    1. When we have to define multipla slots, we will use named slots.
+
+    2. When we declear a slot default, the attribute "name" value will name="default" but we can ignore it if we want to make a slot default.
+
+        <slot name="default">
+            Default Card Contents goes here.
+        </slot>
+
+    3. Suppose we have a component which have two slots. Now the process of implementing named slot,
+
+        CardView.vue Component
+
+            <template>
+                <div class="the-card">
+                    <div class="the-card__title">
+                        {{ cardTitle }}
+                    </div>
+                    <div class="the-card__body">
+                        <slot>
+                            Default Card Contents goes here.
+                        </slot>
+                    </div>
+
+                    <div class="the-card__footer">
+                        <slot name="footer">
+                            Default Footer
+                        </slot>
+                    </div>
+                </div>
+            </template>
+
+        App.vue,
+
+            <card-view cardTitle="About me">
+
+                <template v-slot:default>
+                    Hi, I am Md. Mahmudul Islam
+                </template>
+
+                <template v-slot:footer>
+                    <a href="http://youtube.com" target="_blank">Learn More...</a>
+                </template>
+
+            </card-view>
+
+    4. Short cut way of using slot component, We can use #default instead of v-slot:default
+
+        <card-view cardTitle="Apple iPhone 12 Pro">
+
+            <template #default>
+                <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12-pro--.jpg" alt="">
+                <p>Versions: A2407 (International); A2341 (USA); A2406 (Canada, Japan); A2408 (China, Hong Kong)</p>
+            </template>
+
+            <template #footer>
+                <button>Buy Now</button>
+                <button>Add to Cart</button>
+            </template>
+        </card-view>
 
 
 
