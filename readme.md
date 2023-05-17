@@ -317,7 +317,7 @@
 
             <input v-model="num" type="number">
 
-            Note: We don't need attribute binding and event binding when we use v-model.
+            Note: We don't need attribute binding and event binding both when we use v-model.
 
         App.js,
 
@@ -1352,5 +1352,679 @@
             </template>
         </card-view>
 
+## **36 Slot Object and More**
 
+    1. Now we have a CardView.vue slot component. If we console like bellow,
+
+        <script>
+            export default {
+
+                mounted() {
+                    console.log(this.$slots);
+                    console.log(this.$slots.default);
+                    console.log(this.$slots.footer);
+                },
+
+                props: ["cardTitle"]
+
+            };
+        </script>
+
+      Note: We will get two object in the console. Because we use this slot component two times in the App.vue.
+
+    2. Actually this object can be usefull for show or hide a slot of a component.
+
+    3. When we don't want to add default slot elements and also don't want to see the empty slot styling, we can simply ignor that slot like bellow,
+
+        <div class="the-card__footer" v-if="$slots.footer">
+            <slot name="footer">
+                Default Footer
+            </slot>
+        </div>
+
+## **37 Components Custom Event ($emit)**
+
+    1. A ProductCard.vue component was created in this part where a product card was designed and there are two buttons.
+
+    2. Now If we want to handle click event from app.vue,
+
+        ProductCard.vue,
+
+            <template>
+                <div class="product-card">
+
+                    ...........
+                    ...........
+
+                    <div class="product-card__footer">
+
+                        <button @click="handleBuyNowClick">Buy Now</button>
+                        <button>Add to Cart</button>
+
+                    </div>
+
+                </div>
+            </template>
+
+
+            <script>
+                export default {
+
+                    methods: {
+
+                        handleBuyNowClick(){
+                            this.$emit("buy-now-clicked");
+                        }
+
+                    },
+                    
+                };
+            </script>
+
+        App.vue,
+
+            <template>
+                <div class="container">
+
+                    <product-card :product="product" @buy-now-clicked="buyNow">
+                        
+                    </product-card>
+
+                </div>
+            </template>
+
+
+            <script>
+                import ProductCard from './ProductCard.vue'
+                export default {
+
+                    data(){
+                        return{
+                            product: {
+                                name: "Iphone 12 pro",
+                                thumbnail: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12-pro--.jpg",
+                                price: 167689,
+                            }
+                        }
+                    },
+
+                    components:{
+                        ProductCard
+                    },
+
+                    methods: {
+                        buyNow(){
+                            console.log("Buying....");
+                        }
+                    },
+
+                }
+            </script>
+
+    3. Now if we want to pass argument to the custom event,
+
+        ProductCard.vue,
+
+            methods: {
+                handleBuyNowClick(){
+                    this.$emit("buy-now-clicked", this.product);
+                },
+                handleAddToCartClick(){
+                    this.$emit("add-to-cart-clicked", this.product);
+                },
+            },
+
+        App.vue,
+
+            methods: {
+                buyNow(product) {
+                    console.log("Buying...");
+                    console.log(product);
+                },
+                addToCart(product) {
+                    console.log("Adding...");
+                    console.log(product);
+                },
+            },
+
+        Note: No need to pass argument inside the tag, simply pass the method reference like bellow,
+
+            <product-card 
+            @buy-now-clicked="buyNow" 
+            @add-to-cart-clicked="addToCart"
+            >
+            </product-card>
+
+## **38 Component Communications**
+
+    1. We have seen the component communication before.
+
+    2. Here, App.vue is the parent component. And ProductCard.vue is the child component. 
+    
+    3. When we want to send data from parent to child, we send it by props. When we want to send data from child to parent, 
+       we send it by $emit. This is mainly Component communication.
+
+    4. We can validate $emit like props. Its optional but we can use this process.
+
+    5. We can validate event $emit like bellow,
+
+        <script>
+            export default {
+                emits: {
+
+                    'buy-now-clicked' : function(data){
+                        if(!data){
+                            console.error("Data missing for buy now clicked event...");
+                            return false;
+                        }
+                        return true;
+                    }
+
+                },
+                methods: {
+
+                    handleBuyNowClick(){
+                        this.$emit("buy-now-clicked");
+                    },
+
+                },
+            };
+        </script>
+
+    6. Those who follow TDD (Test Driven Development) can use this process.
+
+## **39 Unidirectional Data Flow / One Way Data Flow**
+
+    1. Unidirectional data flow mainly is a rule. If we follow this rule, it will minimise bugs. Otherwise bugs can arise easily.
+
+    2. People things vue js follow two way data binding, thats why it might not use unidirectional data flow. But 
+       it's a wrong thought. We can use unidirectional data flow while using two way data bindings.
+
+    3. We can not make any change or mutation of the given data from parent component using any kind of event.
+
+    4. Here ProductCard.vue is the child component.
+
+    5. Inside ProductCard.vue,
+
+        <template>
+
+            <div class="product-card">
+            
+                <div class="product-card__title">
+
+                    <img src="/img/star.png" @click="toggleFavourite" v-if="product.addedToFavourite" width="26">
+
+                    <img src="/img/gray.png" @click="toggleFavourite" v-else width="26">
+
+                </div>
+
+        </template>
+
+        <script>
+            export default {
+
+                props: { product: { type: Object, default: () => {} } },
+
+                methods: {
+
+                    toggleFavourite(){
+                        this.product.addedToFavourite = !this.product.addedToFavourite;
+                    }
+
+                },
+
+            };
+        </script>
+
+    Note: We send data inside ProductCard.vue from parent component app.vue via props. We can not change or mutation the data from child component ProductCard.vue. 
+          When we click the img, it will through an error like bellow,
+
+          ***error  Unexpected mutation of "product" prop  vue/no-mutating-props
+
+    5. To change or mutation the data, we have $emit event from child to parent. Then parent can change or mutation the data. Mainly this is called Unidirectional data flow.
+
+    6. Example,
+
+        Inside ProductCard.vue,
+
+            <template>
+
+                <div class="product-card">
+                
+                    <div class="product-card__title">
+
+                        <img src="/img/star.png" @click="toggleFavourite" v-if="product.addedToFavourite" width="26">
+
+                        <img src="/img/gray.png" @click="toggleFavourite" v-else width="26">
+
+                    </div>
+
+            </template>
+
+            <script>
+                export default {
+
+                    props: { product: { type: Object, default: () => {} } },
+
+                    methods: {
+
+                        toggleFavourite(){
+                            this.$emit("toggle-favourite", this.product);
+                        }
+
+                    },
+
+                };
+            </script>
+        
+        Inside App.vue,
+
+            <template>
+                <div class="container">
+                    <product-card
+                        v-for="product in products"
+                        :key="product.name"
+                        :product="product"
+                        @toggle-favourite="handleToggle"
+                    >
+                    </product-card>
+                </div>
+            </template>
+
+            <script>
+                import ProductCard from "./ProductCard.vue";
+                export default {
+                    data() {
+                        return {
+                            products: [
+                                {
+                                    name: "Iphone 12 pro",
+                                    thumbnail:
+                                        "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12-pro--.jpg",
+                                    price: 167689,
+                                    addedToFavourite: true,
+                                },
+                                {
+                                    name: "Waltom RM",
+                                    thumbnail:
+                                        "https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-11i.jpg",
+                                    price: 67689,
+                                    addedToFavourite: false,
+                                },
+                                {
+                                    name: "Xiomi s5",
+                                    thumbnail:
+                                        "https://fdn2.gsmarena.com/vv/bigpic/huawei-p30-pro.jpg",
+                                    price: 18689,
+                                    addedToFavourite: true,
+                                },
+                            ],
+                        };
+                    },
+                    components: {
+                        ProductCard,
+                    },
+                    methods: {
+                        handleToggle(product){
+                            product.addedToFavourite = !product.addedToFavourite;
+                        }
+                    },
+                };
+            </script>
+
+## **40 Moving to Vite**
+
+    1. Vite is another development environment like vue CLI.
+
+    2. We will get very fast build if we use vite development environment.
+
+    3. Vite is a french word which means fast.
+
+    4. Installation,
+
+        command
+            
+            a. npm create vite@latest 40-moving-to-vite -- --template vue 
+
+            b. cd 40-moving-to-vite
+
+            c. npm install
+
+            d. npm run dev
+
+    5. Now we move our previous project(part 39) from vue cli to vite
+
+    6. we will copy vue cli project src folder and past it to vite project. Also have to copy the other necessary files 
+       and paste it inside vite project.  
+
+## **41 Adding V-Model Support**
+
+    1. In this part, we will create a custom rating component and add v-model support inside the component 
+       which does not break unidirectional data flow rule.
+
+    2. If we use v-model in the parent component, we will get "modelValue" inside props in the child component.
+
+        <script>
+            export default {
+                props: {
+
+                    modelValue:{
+                        type: Number,
+                        default: 0,
+                    }
+
+                }
+            }
+        </script> 
+
+    3. Also we have to emit this "modelValue" for getting v-model support in the child component,
+
+        <script>
+            export default {
+                
+                props: {
+                    modelValue:{
+                        type: Number,
+                        default: 0,
+                    }
+                },
+
+                emits: ["update:modelValue"],
+            }
+        </script>
+
+    Note: Now we get the v-model support inside the child component without breking unidirection data flow concept.
+
+    4. We also added a click event inside child component which needs to emit click method,
+
+        <template>
+            <div class="rating">
+                <!-- index will start from 1 -->
+                <div class="rating-star" v-for="index in 5" :key="index" @click="handleClick(index)">
+                    <img src="/public/img/star.png" v-if="index <= modelValue" alt="" width="36">
+                    <img src="/public/img/gray.png" v-if="index > modelValue" alt="" width="36">
+                </div>
+            </div>
+        </template>
+
+
+        <script>
+            export default {
+
+                props: {
+                    modelValue:{
+                        type: Number,
+                        default: 0,
+                    }
+                },
+
+                emits: ["update:modelValue"],
+
+                methods: {
+                    handleClick(index){
+                        this.$emit("update:modelValue", index);
+                    }
+                }
+
+            }
+        </script>
+
+
+## **42 Multiple V-Model Support**
+
+    1. Multiple V-Model support is quite similler to the part one.
+
+    2. Inside CreditCard.vue,
+
+        <template>
+            <div class="credit-card">
+                <label>Name on Card</label>
+                <input
+                    type="text"
+                    :value="nameOnCard"
+                    @input="handleInput('update:nameOnCard', $event)"
+                /><br />
+
+                <label>Card Number</label>
+                <input
+                    type="text"
+                    :value="cardNumber"
+                    @input="handleInput('update:cardNumber', $event)"
+                /><br />
+
+                <div class="row">
+
+                    <div class="col-6">
+
+                        <label>Expiry</label>
+                        <input
+                            type="text"
+                            :value="expiry"
+                            @input="handleInput('update:expiry', $event)"
+                        />
+
+                    </div>
+                    <div class="col-6">
+
+                        <label>CVV</label>
+                        <input
+                            type="text"
+                            :value="cvv"
+                            @input="handleInput('update:cvv', $event)"
+                        />
+
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <script>
+        export default {
+
+            props: {
+                nameOnCard: {
+                    type: String,
+                    default: "",
+                },
+                cardNumber: {
+                    type: Number,
+                    default: "",
+                },
+                expiry: {
+                    type: Number,
+                    default: "",
+                },
+                cvv: {
+                    type: Number,
+                    default: "",
+                },
+
+            },
+
+            methods: {
+                
+                handleInput(eventName, e) {
+                    this.$emit(eventName, e.target.value);
+                },
+
+            },
+        };
+        </script>
+
+        <style>
+            ...............
+            ...............
+            ...............
+        </style>
+
+    3. Inside App.vue,
+
+        <template>
+
+            <header>
+                <h2>{{ msg }}</h2>
+            </header>
+
+            <div class="container">
+                <h4>Credit Card Input</h4>
+                <credit-card
+                    v-model:nameOnCard="nameOnCard"
+                    v-model:cardNumber="cardNumber"
+                    v-model:expiry="expiry"
+                    v-model:cvv="cvv"
+                ></credit-card>
+
+                <br />
+                <hr />
+                <br />
+
+                <p>
+                    Name: {{ nameOnCard }} <br />
+                    Card Number: {{ cardNumber }} <br />
+                    Expiry: {{ expiry }} <br />
+                    CVV: {{ cvv }}
+                </p>
+
+            </div>
+
+        </template>
+
+        <script>
+        import CreditCard from "./CreditCard.vue";
+
+        export default {
+            data() {
+
+                return {
+                    msg: "Welcome to vue js",
+                    nameOnCard: "Mr.",
+                    cardNumber: "",
+                    expiry: "",
+                    cvv: "",
+                };
+                
+            },
+
+            components: {
+                CreditCard,
+            },
+
+            methods: {},
+
+        };
+        </script>
+
+        <style>
+            .......................
+            .......................
+            .......................
+        </style>
+
+
+## **42 Multiple V-Model Support**
+
+    1. We can use child component props property as attribute value from parent component.
+
+        app.vue,
+
+            <the-comment
+                v-model="myComment"
+                buttonText="Continue"
+            ></the-comment>
+
+        TheComment.vue,
+
+            props: {
+                buttonText: {
+                    type: String,
+                    default: "OK",
+                },
+            },
+
+        Note: Here we use "buttonText" as an attribute.
+
+    2. The defined props properties of child components receive values from parent components. But the undefined attributes which actually are 
+       not props proerty will locate to the mother element of child component. These attrigute are called non prop attribute.
+
+    3. Non prop attribute has some benifits. Because of this attributes locate to the parent element of child component, we can pass
+       different css class from parent attribute to child attribute.
+
+    4. We can get all non prop attribute like bellow,
+
+        Inside Child component,
+
+            <script>
+                export default {
+                    mounted() {
+                        console.log(this.$attrs);
+                    },
+                };
+            </script>
+
+    5. If we want non prop attribute don't locate at the parent element of child component,
+
+        <script>
+            export default {
+                inheritAttrs: false,
+            };
+        </script>
+
+    6. Now, we can bind any element of child component with the non prop attribute like bellow,
+
+        Inside Child component,
+
+            <textarea
+                :value="modelValue"
+                @input="handleInput"
+                v-bind="$attrs"
+            ></textarea>
+
+    7. But If there are multiple root or mother elements inside child component, then we just pass v-bind="$attrs" at that selected element.
+
+    8. We can also add all the events from parent components.
+
+## **42 Lifecycle Hooks**
+
+    1. Lifecycle Hooks are very important for developing web or mobile app.
+
+    2. When we create app in vue js. The entire process runs step by step. We may execute different code at different step. 
+       Vue js provides up lifecycle hook for executing our codes at different step of the entire process.
+
+    3. Lifecycle Hooks methods are called one by one during the entire process.
+
+    4. beforeCreate() will return undefined becuse the data property does not initialize at that time,
+
+        export default {
+            data() {
+                return {
+                    msg: "Welcome to vue js",
+                };
+            },
+
+            beforeCreate(){
+                console.log(this.msg)
+            },
+        };
+
+    Note: beforeCreate() method call before initialize the data() property
+
+    5. We don't have to use arrow functions at the time of creating lifecycle hook.
+
+    6. beforeMount() call before update the DOM.
+
+    7. mounted() call after update the DOM.
+
+    8. beforeUpdated() & updated() will call after make any change in the DOM.
+
+    9. We can use lifecyle hook methods in every components.
+
+    10. beforeUnmounted() and unmounted() will call when some component will unmount.
+
+    11. Use case of Lifecycle Hooks,
+
+        a. beforeCreate() & created()       :   API call
+        b. beforeMount() & mount()          :   DOM Manipulation using JS
+        b. beforeUpdated() & updated()      :   When some update will occured (Tracking click event)
+        b. beforeUnmounted() & unmounted()  :   When some component will unmount
+        
 
