@@ -1921,7 +1921,7 @@
         </style>
 
 
-## **42 Multiple V-Model Support**
+## **43 Multiple V-Model Support**
 
     1. We can use child component props property as attribute value from parent component.
 
@@ -1983,7 +1983,7 @@
 
     8. We can also add all the events from parent components.
 
-## **42 Lifecycle Hooks**
+## **44 Lifecycle Hooks**
 
     1. Lifecycle Hooks are very important for developing web or mobile app.
 
@@ -2027,4 +2027,140 @@
         b. beforeUpdated() & updated()      :   When some update will occured (Tracking click event)
         b. beforeUnmounted() & unmounted()  :   When some component will unmount
         
+## **45 Teleport Component**
 
+    1. When a vue js project renders on website, components render in nested structure.
+
+    2. If we want a component renders without nested rendering, suppose we want to render it anywhere inside the body
+       like modal or dialog, then we have to use teleport component.
+
+    3. When we use modal, dialog or notification components, if we render it nested wise, sometimes it creates problems like parent component style inheriting, etc.
+
+    4. If we set 'to="body"', it will render in the body and will not inherite the style.
+
+    5. According to vue js doc the best practice is to create a container inside index.html file like bellow, and render teleport inside the container.
+
+        <div id="app"></div>
+        <div id="dialogs"></div>
+
+    6. A teleport notification component is shown.
+
+    7. We can disable the teleport by adding disabled attribute inside the teleport.
+
+            <teleport to="#dialogs" :disabled="true">
+
+                ..................
+                ..................
+                ..................
+                ..................
+                
+            </teleport> 
+    
+## **46 Fragments**
+
+    1. In vue js 2, the rule was every component has a single root element. But in vue js 3 we can create multiple root component.
+
+    2. This multiple root elements are called fragment.
+
+    3. We know that, what we write inside template, everything will convert to the render function under root element. 
+       But if there multiple root element, vue js use a concept name fragment. That's why this multiple root element is known as fragment. 
+
+## **47 Dynamic Component**
+
+    1. A tab menu is created for learning the dynamic component concept.
+
+    2. Inside app.vue,
+
+        a. General way of rendering tab component,
+
+            <login-view v-if="activeTab === 'Login'"></login-view>
+            <register-view v-if="activeTab === 'Register'"></register-view>
+
+        b. Using Dynamic Component for rendering tab component,
+
+            <component :is="activeTab"></component>
+
+    3. To save the state value, we will add 'keep alive' tag,
+
+        <keep-alive>
+            <component :is="activeTab"></component>
+        </keep-alive>
+
+    Note: To use dynamic component, we should import the components using single 
+
+## **48 Dependency Injection with Provide Inject**
+
+    1. The component which has multiple props to pass value from app.vue like,
+
+        suppose ContactDetails.vue component,
+
+            <script>
+                export default {
+                    props: {
+                        name: String, 
+                        address: {type: String, required: true}, 
+                        websiteAddress: {type: String, required: false, default: 'http://yourwebsite.com'},
+                    },
+                }
+            </script>
+
+        Now if we create dynamic component from app.vue like,
+
+            <keep-alive>
+                <component :is="activeTab"></component>
+            </keep-alive>
+
+        This is a problem to pass the props value from app.vue. In this case, we use dependency injection process. Actually we inject those property to those kind of components.
+
+    2. The dependency injection process is bellow,
+
+        ContactDetails.vue,
+
+            <script>
+                export default {
+                    
+                    inject: ["name", "websiteAddress", "address"],
+
+                    data(){
+                        return{
+
+                        }
+                    },
+                }
+            </script>
+
+        App.vue,
+
+            <script>
+                export default {
+
+                    data() {
+                        return {
+                            msg: "Welcome to vue js",
+                            tabs: ["Login", "Register", "ContactDetails"],
+                            activeTab: "Login",
+                            name: "Mamunur Rashid",
+                            website: "http://youtube.com",
+                            address: "Dhaka",
+                        };
+                    },
+
+                    provide(){
+                        return {
+                            name: this.name,
+                            websiteAddress: this.website,
+                            address: this.address,
+                        }
+                    }
+                };
+            </script>
+
+    3. When there are so many nested component, then we will use this provide-inject I mean dependency injection process to pass data.
+
+    4. But we will not always use it. Because it has a performence issue. provide-inject is not fully reactive. When we watch a property, it can create problem.
+
+    5. We can also pass method using provide-inject process. And also can call the method from child component.
+
+## **49 Working With References**
+
+    1. 
